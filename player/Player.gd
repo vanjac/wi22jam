@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
 const walk_speed = 250
-const walk_accel = 3000
-const walk_decel = 700
+const walk_accel = 5000
+const walk_decel = 1000
 const jump_speed = 400
-const coyote_time = 0.15
+const coyote_time = 0.17
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -44,7 +44,7 @@ func _process(delta):
 		move_vec.y = -jump_speed
 		jumping = true
 	elif on_ground:
-		move_vec.y = 0
+		move_vec.y = gravity * delta
 		jumping = false
 	else:
 		move_vec.y += gravity * delta
@@ -67,7 +67,7 @@ func _process(delta):
 	var moved = move_and_slide(move_vec, Vector2(0, -1), true,
 							   4, 0.785398, false)
 	var was_on_ground = on_ground
-	on_ground = moved.y < move_vec.y
+	on_ground = moved.y < move_vec.y - 0.001
 	if was_on_ground and not on_ground:
 		time_since_left_ground = 0
 	# wall collision
