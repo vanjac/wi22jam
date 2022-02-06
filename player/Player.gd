@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 const walk_speed = 250
-const walk_accel = 2000
+const walk_accel = 3000
 const walk_decel = 700
 const jump_speed = 400
 const coyote_time = 0.15
@@ -50,12 +50,12 @@ func _process(delta):
 		move_vec.y += gravity * delta
 
 	if walk != 0:
-		walk *= walk_speed
+		var walk_vel = walk * walk_speed
 		var accel = walk_accel * delta
-		if abs(walk - move_vec.x) > accel:
-			move_vec.x += sign(walk - move_vec.x) * accel
+		if abs(walk_vel - move_vec.x) > accel:
+			move_vec.x += sign(walk_vel - move_vec.x) * accel
 		else:
-			move_vec.x = walk
+			move_vec.x = walk_vel
 	else:
 		var decel = walk_decel * delta
 		if abs(move_vec.x) > decel:
@@ -70,3 +70,6 @@ func _process(delta):
 	on_ground = moved.y < move_vec.y
 	if was_on_ground and not on_ground:
 		time_since_left_ground = 0
+	# collision with wall
+	if abs(moved.x) < move_vec.x and sign(moved.x) == sign(move_vec.x):
+		move_vec.x = moved.x
