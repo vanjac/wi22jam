@@ -14,10 +14,14 @@ func _physics_process(delta):
 		var collision = move_and_collide(linear_velocity * delta, false)
 		if collision:
 			stuck = true
+			collision_mask = 0  # disable collision
+			var collided_obj = collision.collider
 			var t = global_transform
 			get_parent().remove_child(self)
-			collision.collider.add_child(self)
+			collided_obj.add_child(self)
 			global_transform = t
+			if collided_obj.has_method("_on_shot"):
+				collided_obj.call("_on_shot")
 
 func update_angle():
 	rotation = linear_velocity.angle()
