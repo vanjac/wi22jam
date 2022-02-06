@@ -73,3 +73,6 @@ func _process(delta):
 	# wall collision
 	if sign(moved.x) != sign(move_vec.x):
 		move_vec.x = moved.x
+	# ceiling collision
+	if not on_ground and move_vec.y < 0 and moved.y >= 0:
+		move_vec.y = 0
