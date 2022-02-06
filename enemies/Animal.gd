@@ -9,7 +9,7 @@ var angry = false
 func _ready():
 	player = get_tree().get_root().find_node("Player", true, false)
 
-func _process(delta):
+func _physics_process(delta):
 	if angry:
 		move_vec.x = sign(player.position.x - position.x) * walk_speed
 	move_character(delta)

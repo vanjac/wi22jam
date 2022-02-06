@@ -4,7 +4,7 @@ const walk_speed = 250
 const walk_accel = 5000
 const walk_decel = 1000
 const jump_speed = 400
-const coyote_time = 0.17
+const coyote_time = 0.13
 
 var walk = 0  # 0, 1, or -1
 var jumping = false
@@ -30,19 +30,18 @@ func _process(delta):
 	else:
 		walk = 0
 
-	# update move_vec
-	var was_on_ground = on_ground
-
-	if not on_ground:
-		time_since_left_ground += delta
-
 	var can_jump = on_ground or (not jumping and time_since_left_ground < coyote_time)
 	if can_jump and Input.is_action_just_pressed("jump"):
 		move_vec.y = -jump_speed
 		jumping = true
 		on_ground = false
-	elif on_ground:
+
+func _physics_process(delta):
+	if on_ground:
+		time_since_left_ground = 0
 		jumping = false
+	else:
+		time_since_left_ground += delta
 
 	if walk != 0:
 		var walk_vel = walk * walk_speed
@@ -59,5 +58,3 @@ func _process(delta):
 			move_vec.x = 0
 
 	move_character(delta)
-	if was_on_ground and not on_ground:
-		time_since_left_ground = 0
