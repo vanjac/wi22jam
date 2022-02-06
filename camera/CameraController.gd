@@ -7,16 +7,16 @@ const follow_facing_rate = 0.02
 const follow_ground_rate = 0.04
 
 var player
-var target_offset = Vector2(0, offset.y)
 
 func _ready():
 	player = get_node(player_path)
 
 
 func _process(delta):
-	target_offset.x = player.facing.x * facing_offset
 	if player.walk != 0:
-		offset += (target_offset - offset) * pow(follow_facing_rate, delta * 60)
+		var target_offset_x = player.walk * facing_offset
+		offset.x += ((target_offset_x - offset.x)
+			* pow(follow_facing_rate, delta * 60))
 
 	global_position.x = player.global_position.x
 	var player_y = player.global_position.y
