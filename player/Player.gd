@@ -70,6 +70,6 @@ func _process(delta):
 	on_ground = moved.y < move_vec.y
 	if was_on_ground and not on_ground:
 		time_since_left_ground = 0
-	# collision with wall
-	if abs(moved.x) < move_vec.x and sign(moved.x) == sign(move_vec.x):
+	# wall collision
+	if sign(moved.x) != sign(move_vec.x):
 		move_vec.x = moved.x
