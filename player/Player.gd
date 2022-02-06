@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends "res://core/Character.gd"
 
 const walk_speed = 250
 const walk_accel = 5000
@@ -6,11 +6,7 @@ const walk_decel = 1000
 const jump_speed = 400
 const coyote_time = 0.17
 
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-var move_vec = Vector2(0,0)  # x component is walk, y component is grav
 var walk = 0  # 0, 1, or -1
-var on_ground = false
 var jumping = false
 var time_since_left_ground = 0
 
@@ -35,6 +31,7 @@ func _process(delta):
 		walk = 0
 
 	# update move_vec
+	var was_on_ground = on_ground
 
 	if not on_ground:
 		time_since_left_ground += delta
@@ -43,11 +40,9 @@ func _process(delta):
 	if can_jump and Input.is_action_just_pressed("jump"):
 		move_vec.y = -jump_speed
 		jumping = true
+		on_ground = false
 	elif on_ground:
-		move_vec.y = gravity * delta
 		jumping = false
-	else:
-		move_vec.y += gravity * delta
 
 	if walk != 0:
 		var walk_vel = walk * walk_speed
@@ -63,16 +58,6 @@ func _process(delta):
 		else:
 			move_vec.x = 0
 
-	# TODO snap to ground
-	var moved = move_and_slide(move_vec, Vector2(0, -1), true,
-							   4, 0.785398, false)
-	var was_on_ground = on_ground
-	on_ground = moved.y < move_vec.y - 0.001
+	move_character(delta)
 	if was_on_ground and not on_ground:
 		time_since_left_ground = 0
-	# wall collision
-	if sign(moved.x) != sign(move_vec.x):
-		move_vec.x = moved.x
-	# ceiling collision
-	if not on_ground and move_vec.y < 0 and moved.y >= 0:
-		move_vec.y = 0
