@@ -40,7 +40,7 @@ func _process(delta):
 		time_since_left_ground += delta
 
 	var can_jump = on_ground or (not jumping and time_since_left_ground < coyote_time)
-	if can_jump and Input.is_action_pressed("jump"):
+	if can_jump and Input.is_action_just_pressed("jump"):
 		move_vec.y = -jump_speed
 		jumping = true
 	elif on_ground:
