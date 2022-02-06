@@ -4,6 +4,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var move_vec = Vector2(0,0)  # x component is walk, y component is grav
 var on_ground = false
+var snap_dist = 10
 
 func move_character(delta):
 	if on_ground:
@@ -11,13 +12,16 @@ func move_character(delta):
 	else:
 		move_vec.y += gravity * delta
 
-	# TODO snap to ground
-	var moved = move_and_slide(move_vec, Vector2(0, -1), true,
-							   4, 0.785398, false)
-	on_ground = moved.y < move_vec.y - 0.001
-	# wall collision
-	if sign(moved.x) != sign(move_vec.x):
-		move_vec.x = moved.x
-	# ceiling collision
-	if not on_ground and move_vec.y < 0 and moved.y >= 0:
+	move_and_slide_with_snap(
+		move_vec,									# linear_velocity
+		Vector2(0, snap_dist if on_ground else 0),	# snap
+		Vector2(0, -1),								# up direction
+		true,										# stop_on_slope
+		4,											# max_slides
+		0.785398,									# floor_max_angle
+		false)										# infinite_inertia
+	on_ground = is_on_floor()
+	if is_on_ceiling():
 		move_vec.y = 0
+	if is_on_wall():
+		move_vec.x = 0

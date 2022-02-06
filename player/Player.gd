@@ -4,7 +4,7 @@ const walk_speed = 250
 const walk_accel = 5000
 const walk_decel = 1000
 const jump_speed = 400
-const coyote_time = 0.13
+const coyote_time = 0.1
 
 var walk = 0  # 0, 1, or -1
 var jumping = false
