@@ -13,6 +13,8 @@ var walk = 0  # 0, 1, or -1
 var on_ground = false
 var jumping = false
 var time_since_left_ground = 0
+# tells the camera which way to look
+var facing = Vector2(1,0)
 
 func _ready():
 	pass
@@ -33,6 +35,9 @@ func _process(delta):
 		walk = 1
 	else:
 		walk = 0
+
+	if walk != 0:
+		facing.x = walk
 
 	# update move_vec
 

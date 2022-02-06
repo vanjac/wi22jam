@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://camera/Camera.tscn" type="PackedScene" id=1]
+[ext_resource path="res://placeholder/platform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera" parent="." instance=ExtResource( 1 )]
+player_path = NodePath("../Player")
+
+[node name="platform1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 10, 253 )
+scale = Vector2( 14.6985, 1.37519 )
+
+[node name="platform8" parent="." instance=ExtResource( 2 )]
+position = Vector2( 897, -102 )
+scale = Vector2( 6.94969, 0.846547 )
+
+[node name="platform7" parent="." instance=ExtResource( 2 )]
+position = Vector2( 852, 383 )
+rotation = 0.291524
+scale = Vector2( 14.6985, 1.37519 )
+
+[node name="platform2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 548, -32 )
+scale = Vector2( 2.92705, 0.311899 )
+
+[node name="platform3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -414, 33 )
+scale = Vector2( 0.99856, 6.19271 )
+
+[node name="platform4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -125, 164 )
+scale = Vector2( 0.99856, 1.35648 )
+
+[node name="platform5" parent="." instance=ExtResource( 2 )]
+position = Vector2( -310, 55 )
+scale = Vector2( 2.86244, 0.915979 )
+
+[node name="platform6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 279, 78 )
+rotation = -0.311144
+scale = Vector2( 5.68169, 0.233303 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
