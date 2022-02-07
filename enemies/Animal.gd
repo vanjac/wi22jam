@@ -66,16 +66,19 @@ func _physics_process(delta):
 
 func _on_angered():
 	set_state(State.WAKE)
-	collision_layer = 1  # move to foreground
-	sprite.frame = 0
 
 func _on_shot(position, direction):
 	set_state(State.TAME)
-	collision_layer = 4  # anger
-	sprite.frame = 2
 	move_vec.x = direction.x * knockback_speed
 
 
 func set_state(s):
 	state = s
 	time_in_state = 0
+	match state:
+		State.TAME:
+			collision_layer = 4  # anger
+			sprite.frame = 2
+		State.WAKE:
+			collision_layer = 1  # move to foreground
+			sprite.frame = 0
