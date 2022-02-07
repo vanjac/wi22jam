@@ -13,6 +13,9 @@ func _ready():
 
 
 func _process(delta):
+	if not is_instance_valid(player):
+		return
+
 	if player.walk != 0:
 		var target_offset_x = player.walk * facing_offset
 		offset.x += ((target_offset_x - offset.x)

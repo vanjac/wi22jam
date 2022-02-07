@@ -10,6 +10,8 @@ var walk = 0  # 0, 1, or -1
 var jumping = false
 var time_since_left_ground = 0
 
+var health = 4
+
 func _ready():
 	pass
 
@@ -58,3 +60,13 @@ func _physics_process(delta):
 			move_vec.x = 0
 
 	move_character(delta)
+
+func _on_attacked():
+	print("ouch!")
+	damage(1)
+
+
+func damage(amt):
+	health -= amt
+	if health == 0:
+		queue_free()
