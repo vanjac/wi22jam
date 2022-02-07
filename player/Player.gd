@@ -47,17 +47,9 @@ func _physics_process(delta):
 
 	if walk != 0:
 		var walk_vel = walk * walk_speed
-		var accel = walk_accel * delta
-		if abs(walk_vel - move_vec.x) > accel:
-			move_vec.x += sign(walk_vel - move_vec.x) * accel
-		else:
-			move_vec.x = walk_vel
+		move_vec.x = accelerate(move_vec.x, walk_vel, walk_accel * delta)
 	else:
-		var decel = walk_decel * delta
-		if abs(move_vec.x) > decel:
-			move_vec.x -= sign(move_vec.x) * decel
-		else:
-			move_vec.x = 0
+		move_vec.x = decelerate(move_vec.x, walk_decel * delta)
 
 	move_character(delta)
 

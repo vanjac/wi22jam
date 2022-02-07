@@ -25,3 +25,12 @@ func move_character(delta):
 		move_vec.y = 0
 	if is_on_wall():
 		move_vec.x = 0
+
+func accelerate(cur_vel, target_vel, rate):
+	if abs(target_vel - cur_vel) > rate:
+		return cur_vel + sign(target_vel - cur_vel) * rate
+	else:
+		return target_vel
+
+func decelerate(cur_vel, rate):
+	return accelerate(cur_vel, 0, rate)

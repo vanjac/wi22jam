@@ -24,7 +24,8 @@ func _physics_process(delta):
 			global_transform = t
 
 			if collided_obj.has_method("_on_shot"):
-				collided_obj.call("_on_shot", global_position)
+				collided_obj.call("_on_shot", global_position,
+								  linear_velocity.normalized())
 
 func update_angle():
 	rotation = linear_velocity.angle()
