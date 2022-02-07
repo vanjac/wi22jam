@@ -2,7 +2,7 @@ extends Camera2D
 
 export(NodePath) var player_path
 
-const facing_offset = 150
+const facing_offset = 120
 const follow_facing_rate = 0.02
 const follow_ground_rate = 0.04
 
