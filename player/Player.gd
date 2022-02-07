@@ -5,6 +5,7 @@ const walk_accel = 5000
 const walk_decel = 1000
 const jump_speed = 400
 const coyote_time = 0.1
+const knockback_speed = 175
 
 var walk = 0  # 0, 1, or -1
 var jumping = false
@@ -53,12 +54,13 @@ func _physics_process(delta):
 
 	move_character(delta)
 
-func _on_attacked():
-	print("ouch!")
+func _on_attacked(direction):
 	damage(1)
+	move_vec = direction * knockback_speed
 
 
 func damage(amt):
+	print("ouch!")
 	health -= amt
 	if health == 0:
 		queue_free()

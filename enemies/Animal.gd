@@ -60,7 +60,7 @@ func _physics_process(delta):
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
 			if collision.collider.has_method("_on_attacked"):
-				collision.collider._on_attacked()
+				collision.collider._on_attacked(Vector2(sign(to_player), 0))
 				set_state(State.RECOIL)
 				move_vec.x = -sign(to_player) * walk_speed
 
