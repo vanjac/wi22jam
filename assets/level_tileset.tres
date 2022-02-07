@@ -66,16 +66,16 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=22]
-points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 32, 12, 32, 32, 0, 32 )
+points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 32, 16, 32, 32, 0, 32 )
 
 [sub_resource type="ConvexPolygonShape2D" id=23]
-points = PoolVector2Array( 0, 12, 0, 12, 32, 24, 32, 32, 0, 32 )
+points = PoolVector2Array( 0, 16, 0, 16, 32, 32, 32, 32, 0, 32 )
 
 [sub_resource type="ConvexPolygonShape2D" id=24]
-points = PoolVector2Array( 0, 24, 0, 24, 32, 12, 32, 32, 0, 32 )
+points = PoolVector2Array( 0, 16, 0, 32, 32, 16, 32, 32, 0, 32 )
 
 [sub_resource type="ConvexPolygonShape2D" id=25]
-points = PoolVector2Array( 0, 12, 0, 12, 32, 0, 32, 32, 0, 32 )
+points = PoolVector2Array( 0, 16, 0, 16, 32, 0, 32, 32, 0, 32 )
 
 [resource]
 0/name = "ground autotile"
