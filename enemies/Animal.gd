@@ -33,6 +33,8 @@ func _physics_process(delta):
 		else:
 			move_vec.x = 0
 		sprite.scale.x = -1 if to_player >= 0 else 1
+	else:
+		move_vec.x = 0
 	move_character(delta)
 	if angry:
 		for i in get_slide_count():
@@ -41,7 +43,12 @@ func _physics_process(delta):
 				collision.collider._on_attacked()
 				recoil = recoil_time
 
-func _on_shot():
+func _on_angered():
 	angry = true
 	collision_layer = 1  # move to foreground
 	sprite.frame = 0
+
+func _on_shot(position):
+	angry = false
+	collision_layer = 4  # anger
+	sprite.frame = 2

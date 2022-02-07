@@ -48,9 +48,10 @@ fire={
 
 [layer_names]
 
+2d_render/layer_2="anger_light"
 2d_physics/layer_1="general"
 2d_physics/layer_2="player"
-2d_physics/layer_3="bg_animal"
+2d_physics/layer_3="anger"
 
 [physics]
 
