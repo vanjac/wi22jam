@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/bear-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://enemies/Animal.gd" type="Script" id=2]
+
+[node name="Bear" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -24 )
+texture = ExtResource( 1 )
+hframes = 3
+frame = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -17, 0, -16, -7, -9, -19, -12, -24, -12, -36, 10, -36, 10, -20, 16, 0 )
