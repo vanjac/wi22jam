@@ -1,6 +1,6 @@
 extends Node2D
 
-const shoot_speed = 1000
+const shoot_speed = 800
 
 var arrow_scene = preload("res://bow/Arrow.tscn")
 var player
