@@ -85,9 +85,11 @@ func set_state(s):
 	match state:
 		State.TAME:
 			collision_layer = 4  # anger
+			collision_mask = 1
 			sprite.frame = 0
 		State.WAKE:
-			collision_layer = 1  # move to foreground
+			collision_layer = 8  # enemy
+			collision_mask = 1 + 2 + 8 # general + player + enemy
 			sprite.frame = 1
 		State.DIE:
 			collision_layer = 0
