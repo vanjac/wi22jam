@@ -5,17 +5,15 @@ const max_shoot_speed = 1200
 const max_draw_time = 1
 
 var arrow_scene = preload("res://bow/Arrow.tscn")
-var player
-var pivot
-var charge_progress
+onready var player = get_parent()
+onready var pivot = $Pivot
+onready var charge_progress = $Charge
 
 var draw_time = 0
 
 
 func _ready():
-	player = get_parent()
-	pivot = $Pivot
-	charge_progress = $Charge
+	pass
 
 func _process(delta):
 	var vec_to_mouse = get_global_mouse_position() - global_position

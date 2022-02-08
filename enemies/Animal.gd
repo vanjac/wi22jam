@@ -9,8 +9,8 @@ const step_time = 0.2
 const knockback_speed = 150
 const knockback_decel = 200
 
-var sprite
-var player
+onready var sprite = $Sprite
+onready var player = get_tree().get_root().find_node("Player", true, false)
 
 enum State { TAME, WAKE, CHASE, RECOIL }
 var state = State.TAME
@@ -19,8 +19,7 @@ var time_in_state = 0
 var step = 0
 
 func _ready():
-	sprite = $Sprite
-	player = get_tree().get_root().find_node("Player", true, false)
+	pass
 
 func _process(delta):
 	time_in_state += delta

@@ -6,10 +6,10 @@ const facing_offset = 120
 const follow_facing_rate = 0.02
 const follow_ground_rate = 0.04
 
-var player
+onready var player = get_node(player_path)
 
 func _ready():
-	player = get_node(player_path)
+	pass
 
 
 func _process(delta):
