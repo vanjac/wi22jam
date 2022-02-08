@@ -10,6 +10,7 @@ script = ExtResource( 2 )
 [node name="Pivot" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Pivot"]
+visible = false
 rotation = 0.785398
 texture = ExtResource( 1 )
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://placeholder/square.png" type="Texture" id=1]
+[ext_resource path="res://assets/player-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
 [ext_resource path="res://bow/Bow.tscn" type="PackedScene" id=3]
 
@@ -25,8 +25,9 @@ _bundled = {
 "version": 2
 }
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 14, 28 )
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 13.0
+height = 14.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -34,17 +35,16 @@ script = ExtResource( 2 )
 dash = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -28 )
-shape = SubResource( 1 )
+position = Vector2( 0, -20 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 0, -28 )
-scale = Vector2( 0.438, 0.876 )
+position = Vector2( 0, -20 )
 texture = ExtResource( 1 )
+hframes = 8
 
 [node name="bow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, -28 )
+position = Vector2( 0, -13 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="dash_timer" type="Timer" parent="."]
