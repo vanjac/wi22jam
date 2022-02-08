@@ -13,6 +13,7 @@ const shake_step = 1.0/15.0
 const shake_move = 1
 
 export(bool) var is_animal = false
+export(float) var wake_prob = 1.0
 export(float) var walk_speed = 100
 export(float) var step_time = 0.2
 
@@ -82,10 +83,11 @@ func _physics_process(delta):
 				move_vec.x = -sign(to_player) * walk_speed
 
 func _on_angered():
-	if is_animal:
-		set_state(State.WAKE)
-	else:
-		set_state(State.SHAKE)
+	if randf() <= wake_prob:
+		if is_animal:
+			set_state(State.WAKE)
+		else:
+			set_state(State.SHAKE)
 
 func _on_shot(position, direction):
 	if is_animal:
@@ -103,10 +105,12 @@ func set_state(s):
 			collision_layer = 4  # anger
 			collision_mask = 1
 			sprite.frame = 0
+			z_index = -1
 		State.WAKE:
 			collision_layer = 8  # enemy
 			collision_mask = 1 + 2 + 8 # general + player + enemy
 			sprite.frame = 1
+			z_index = 1
 		State.DIE:
 			collision_layer = 0
 			collision_mask = 0  # fall through world

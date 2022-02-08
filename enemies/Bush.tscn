@@ -8,6 +8,7 @@ extents = Vector2( 14, 11 )
 
 [node name="Bush" type="KinematicBody2D"]
 script = ExtResource( 2 )
+wake_prob = 0.3
 walk_speed = 70.0
 step_time = 0.15
 

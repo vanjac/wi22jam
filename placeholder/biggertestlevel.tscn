@@ -27,3 +27,18 @@ script = ExtResource( 2 )
 
 [node name="Bush" parent="." instance=ExtResource( 6 )]
 position = Vector2( 245, 64 )
+
+[node name="Bush2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 191, 64 )
+
+[node name="Bush3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 484, -128 )
+
+[node name="Bush4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 127, 64 )
+
+[node name="Bush5" parent="." instance=ExtResource( 6 )]
+position = Vector2( 217, 64 )
+
+[node name="Bush6" parent="." instance=ExtResource( 6 )]
+position = Vector2( 158, 64 )
