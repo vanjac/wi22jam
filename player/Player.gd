@@ -18,7 +18,7 @@ const walk_decel = 1000
 const jump_speed = 400
 const coyote_time = 0.1
 const knockback_speed = 175
-const walk_step_time = 0.15
+const walk_step_time = 0.14
 const stand_step_time = 0.3
 const dash_step_time = 0.07
 
