@@ -28,6 +28,8 @@ var time_since_left_ground = 0
 var step = 0
 
 var health = 4
+const hurt_anim_time = 0.5
+var hurt_time = 0
 
 func _ready():
 	dash_timer.connect("timeout", self, "dash_timer_timeout")
@@ -73,6 +75,13 @@ func _process(delta):
 		else:
 			anim_step(stand_step_time, 0, 1)
 
+	if hurt_time > 0:
+		sprite.modulate = Color.white.linear_interpolate(Color(1.5, 0, 0),
+			hurt_time / hurt_anim_time)
+		hurt_time -= delta
+	else:
+		sprite.modulate = Color.white
+
 func _physics_process(delta):
 	if on_ground:
 		time_since_left_ground = 0
@@ -100,7 +109,7 @@ func _on_attacked(direction):
 
 
 func damage(amt):
-	print("ouch!")
+	hurt_time = hurt_anim_time
 	health -= amt
 	if health == 0:
 		queue_free()
