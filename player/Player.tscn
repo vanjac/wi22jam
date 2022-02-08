@@ -1,9 +1,29 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://placeholder/square.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
 [ext_resource path="res://bow/Bow.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/DashSprite.tscn" type="PackedScene" id=5]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Sprite
+
+func _physics_process(delta):
+	modulate.a = lerp(modulate.a, 0, 0.1);
+	if (modulate.a < 0.01): queue_free()
+"
+
+[sub_resource type="PackedScene" id=3]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "DashSprite", "Sprite", "script" ),
+"node_count": 1,
+"node_paths": [  ],
+"nodes": PoolIntArray( -1, -1, 1, 0, -1, 1, 2, 0, 0 ),
+"variants": [ SubResource( 2 ) ],
+"version": 2
+}
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14, 28 )
@@ -11,7 +31,7 @@ extents = Vector2( 14, 28 )
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-dash = ExtResource( 5 )
+dash = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -28 )

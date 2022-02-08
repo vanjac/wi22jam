@@ -104,10 +104,6 @@ func handle_dash():
 		dash_timer.start(dash_time)
 		
 	if (is_dashing):
-		var dash_node = dash.instance()
-		dash_node.global_position = global_position
-		get_parent().add_child(dash_node)
-		
 		if (on_ground): is_dashing = false
 		if (is_on_wall()): is_dashing = false
 		pass
