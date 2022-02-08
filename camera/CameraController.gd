@@ -5,6 +5,7 @@ export(NodePath) var player_path
 const facing_offset = 120
 const follow_facing_rate = 0.02
 const follow_ground_rate = 0.04
+const max_player_height = 150
 
 onready var player = get_node(player_path)
 
@@ -25,6 +26,8 @@ func _process(delta):
 	var player_y = player.global_position.y
 	if player_y > global_position.y:
 		global_position.y = player_y
+	elif player_y < global_position.y - max_player_height:
+		global_position.y = player_y + max_player_height
 	elif player.on_ground:
 		global_position.y = smooth_to_target(global_position.y, player_y,
 											 follow_ground_rate, delta)
