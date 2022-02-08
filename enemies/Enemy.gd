@@ -1,6 +1,5 @@
 extends "res://core/Character.gd"
 
-const walk_speed = 100
 const walk_decel = 200
 const wake_time = 0.4
 const recoil_time = 0.4
@@ -8,6 +7,9 @@ const chase_time = 10
 const step_time = 0.2
 const knockback_speed = 150
 const knockback_decel = 200
+
+export(bool) var is_animal = false
+export(float) var walk_speed = 100
 
 onready var sprite = $Sprite
 onready var player = get_tree().get_root().find_node("Player", true, false)
@@ -19,7 +21,7 @@ var time_in_state = 0
 var step = 0
 
 func _ready():
-	pass
+	set_state(State.TAME)
 
 func _process(delta):
 	time_in_state += delta
@@ -47,9 +49,9 @@ func _physics_process(delta):
 	if state == State.CHASE:
 		if abs(to_player) >= sprite.get_rect().size.x / 2:
 			move_vec.x = sign(to_player) * walk_speed
+			sprite.scale.x = -1 if to_player >= 0 else 1
 		else:
 			move_vec.x = decelerate(move_vec.x, walk_decel * delta)
-		sprite.scale.x = -1 if to_player >= 0 else 1
 	else:
 		move_vec.x = decelerate(move_vec.x, knockback_decel * delta)
 
