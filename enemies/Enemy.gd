@@ -29,6 +29,8 @@ var shake_dir = 1
 
 func _ready():
 	set_state(State.TAME)
+	if not is_animal:
+		sprite.light_mask = 2  # anger_light
 
 func _process(delta):
 	time_in_state += delta
