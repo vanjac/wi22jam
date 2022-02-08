@@ -1,5 +1,16 @@
 extends "res://core/Character.gd"
 
+export (PackedScene) var dash
+const dash_speed = 4000
+const dash_distance = 0.2
+const dash_time = 0.2
+
+var is_dashing = false
+var can_dash = true
+var dash_direction : Vector2
+
+onready var dash_timer = $dash_timer
+
 const walk_speed = 250
 const walk_accel = 5000
 const walk_decel = 1000
@@ -14,7 +25,7 @@ var time_since_left_ground = 0
 var health = 4
 
 func _ready():
-	pass
+	dash_timer.connect("timeout", self, "dash_timer_timeout")
 
 
 func _process(delta):
@@ -43,6 +54,7 @@ func _physics_process(delta):
 	if on_ground:
 		time_since_left_ground = 0
 		jumping = false
+		can_dash = true
 	else:
 		time_since_left_ground += delta
 
@@ -52,6 +64,11 @@ func _physics_process(delta):
 	else:
 		move_vec.x = decelerate(move_vec.x, walk_decel * delta)
 
+	handle_dash()
+
+	if (is_dashing):
+		move_vec = dash_direction
+	
 	move_character(delta)
 
 func _on_attacked(direction):
@@ -64,3 +81,33 @@ func damage(amt):
 	health -= amt
 	if health == 0:
 		queue_free()
+
+
+func dash_timer_timeout():
+	is_dashing = false
+	
+
+func handle_dash():
+	if (Input.is_action_pressed("dash") && can_dash && !on_ground):
+		Engine.time_scale = 0.1
+	else:
+		Engine.time_scale = 1
+	
+	if (Input.is_action_just_released("dash") && can_dash && !on_ground):
+		is_dashing = true
+		can_dash = false
+				
+		dash_direction = get_local_mouse_position()
+		dash_direction = dash_direction.clamped(dash_distance)
+		dash_direction *= dash_speed
+		
+		dash_timer.start(dash_time)
+		
+	if (is_dashing):
+		var dash_node = dash.instance()
+		dash_node.global_position = global_position
+		get_parent().add_child(dash_node)
+		
+		if (on_ground): is_dashing = false
+		if (is_on_wall()): is_dashing = false
+		pass

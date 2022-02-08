@@ -19,7 +19,7 @@ func _process(delta):
 	if player.walk != 0:
 		var target_offset_x = player.walk * facing_offset
 		offset.x += ((target_offset_x - offset.x)
-			* pow(follow_facing_rate, delta * 60))
+			* pow(follow_facing_rate, (delta * 60) / Engine.time_scale))
 
 	global_position.x = player.global_position.x
 	var player_y = player.global_position.y

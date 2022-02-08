@@ -25,7 +25,7 @@ func _process(delta):
 		draw_time = 0
 		charge_progress.visible = true
 	if Input.is_action_pressed("fire"):
-		draw_time += delta
+		draw_time += delta / Engine.time_scale
 		charge_progress.value = clamp(draw_time / max_draw_time, 0, 1) * 100
 
 	if Input.is_action_just_released("fire"):
