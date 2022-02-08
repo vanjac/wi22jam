@@ -4,17 +4,18 @@ const walk_decel = 200
 const wake_time = 0.4
 const recoil_time = 0.4
 const chase_time = 10
-const step_time = 0.2
 const knockback_speed = 150
 const knockback_decel = 200
+const die_spin_speed = 100
 
 export(bool) var is_animal = false
 export(float) var walk_speed = 100
+export(float) var step_time = 0.2
 
 onready var sprite = $Sprite
 onready var player = get_tree().get_root().find_node("Player", true, false)
 
-enum State { TAME, WAKE, CHASE, RECOIL }
+enum State { TAME, WAKE, CHASE, RECOIL, DIE }
 var state = State.TAME
 var time_in_state = 0
 
@@ -40,6 +41,8 @@ func _process(delta):
 		State.RECOIL:
 			if time_in_state >= recoil_time:
 				set_state(State.CHASE)
+		State.DIE:
+			rotation += sign(move_vec.x) * delta * deg2rad(die_spin_speed)
 
 func _physics_process(delta):
 	var to_player = 0
@@ -52,7 +55,7 @@ func _physics_process(delta):
 			sprite.scale.x = -1 if to_player >= 0 else 1
 		else:
 			move_vec.x = decelerate(move_vec.x, walk_decel * delta)
-	else:
+	elif state != State.DIE:
 		move_vec.x = decelerate(move_vec.x, knockback_decel * delta)
 
 	move_character(delta)
@@ -69,7 +72,10 @@ func _on_angered():
 	set_state(State.WAKE)
 
 func _on_shot(position, direction):
-	set_state(State.TAME)
+	if is_animal:
+		set_state(State.TAME)
+	else:
+		set_state(State.DIE)
 	move_vec.x = direction.x * knockback_speed
 
 
@@ -83,3 +89,6 @@ func set_state(s):
 		State.WAKE:
 			collision_layer = 1  # move to foreground
 			sprite.frame = 1
+		State.DIE:
+			collision_layer = 0
+			collision_mask = 0  # fall through world
