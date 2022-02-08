@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/HUD.gd" type="Script" id=1]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+player_path = NodePath("../Player")
+
+[node name="Health" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 144.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
