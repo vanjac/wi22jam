@@ -20,7 +20,7 @@ const coyote_time = 0.1
 const knockback_speed = 175
 const walk_step_time = 0.14
 const stand_step_time = 0.3
-const dash_step_time = 0.07
+const dash_step_time = 1.0/15.0
 
 var walk = 0  # 0, 1, or -1
 var jumping = false

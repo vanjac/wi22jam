@@ -8,6 +8,10 @@ const knockback_speed = 150
 const knockback_decel = 200
 const die_spin_speed = 100
 
+const shake_time = 1
+const shake_step = 1.0/15.0
+const shake_move = 1
+
 export(bool) var is_animal = false
 export(float) var walk_speed = 100
 export(float) var step_time = 0.2
@@ -15,11 +19,12 @@ export(float) var step_time = 0.2
 onready var sprite = $Sprite
 onready var player = get_tree().get_root().find_node("Player", true, false)
 
-enum State { TAME, WAKE, CHASE, RECOIL, DIE }
+enum State { TAME, SHAKE, WAKE, CHASE, RECOIL, DIE }
 var state = State.TAME
 var time_in_state = 0
 
 var step = 0
+var shake_dir = 1
 
 func _ready():
 	set_state(State.TAME)
@@ -28,6 +33,14 @@ func _process(delta):
 	time_in_state += delta
 
 	match state:
+		State.SHAKE:
+			step += delta
+			if step > shake_step:
+				step -= shake_step
+				position.x += shake_move * shake_dir
+				shake_dir *= -1
+			if time_in_state >= shake_time:
+				set_state(State.WAKE)
 		State.WAKE:
 			if time_in_state >= wake_time:
 				set_state(State.CHASE)
@@ -69,7 +82,10 @@ func _physics_process(delta):
 				move_vec.x = -sign(to_player) * walk_speed
 
 func _on_angered():
-	set_state(State.WAKE)
+	if is_animal:
+		set_state(State.WAKE)
+	else:
+		set_state(State.SHAKE)
 
 func _on_shot(position, direction):
 	if is_animal:
