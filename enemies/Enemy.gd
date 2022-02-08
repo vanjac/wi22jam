@@ -7,6 +7,7 @@ const chase_time = 10
 const knockback_speed = 150
 const knockback_decel = 200
 const die_spin_speed = 100
+const die_time = 2
 
 const shake_time = 1
 const shake_step = 1.0/15.0
@@ -59,6 +60,8 @@ func _process(delta):
 				set_state(State.CHASE)
 		State.DIE:
 			rotation += sign(move_vec.x) * delta * deg2rad(die_spin_speed)
+			if time_in_state >= die_time:
+				queue_free()
 
 func _physics_process(delta):
 	var to_player = 0
