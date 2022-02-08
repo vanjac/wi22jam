@@ -65,7 +65,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	var to_player = 0
-	if is_instance_valid(player):
+	if is_instance_valid(player) and player.health != 0:
 		to_player = player.position.x - position.x
 
 	if state == State.CHASE:

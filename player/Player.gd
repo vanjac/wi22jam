@@ -31,11 +31,32 @@ var health = 4
 const hurt_anim_time = 0.5
 var hurt_time = 0
 
+const die_time = 0.3
+const die_knockback_x = 300
+const die_knockback_y = 150
+var die = 0
+var die_direction = 0
+
 func _ready():
 	dash_timer.connect("timeout", self, "dash_timer_timeout")
 
 
 func _process(delta):
+	if hurt_time > 0:
+		sprite.modulate = Color.white.linear_interpolate(Color(1.5, 0, 0),
+			hurt_time / hurt_anim_time)
+		hurt_time -= delta
+	else:
+		sprite.modulate = Color.white
+
+	if health == 0:
+		# dead
+		walk = 0
+		sprite.frame = 1
+		die += delta
+		rotation_degrees = lerp(0, 90 * die_direction, clamp(die / die_time, 0, 1))
+		return
+
 	var left_pressed = Input.is_action_pressed("left")
 	var right_pressed = Input.is_action_pressed("right")
 	if left_pressed and right_pressed:
@@ -75,13 +96,6 @@ func _process(delta):
 		else:
 			anim_step(stand_step_time, 0, 1)
 
-	if hurt_time > 0:
-		sprite.modulate = Color.white.linear_interpolate(Color(1.5, 0, 0),
-			hurt_time / hurt_anim_time)
-		hurt_time -= delta
-	else:
-		sprite.modulate = Color.white
-
 func _physics_process(delta):
 	if on_ground:
 		time_since_left_ground = 0
@@ -105,14 +119,19 @@ func _physics_process(delta):
 
 func _on_attacked(direction):
 	damage(1)
-	move_vec = direction * knockback_speed
+	if health != 0:
+		move_vec = direction * knockback_speed
+	else:
+		move_vec = direction * die_knockback_x
+		move_vec.y -= die_knockback_y
+		on_ground = false
+		die_direction = sign(direction.x)
+		$bow.queue_free()
 
 
 func damage(amt):
 	hurt_time = hurt_anim_time
 	health -= amt
-	if health == 0:
-		queue_free()
 
 
 func dash_timer_timeout():
