@@ -34,7 +34,7 @@ func _process(delta):
 			step += delta
 			if step > step_time:
 				step -= step_time
-				sprite.frame = (sprite.frame + 1) % 2
+				sprite.frame = 2 if sprite.frame == 1 else 1
 			if time_in_state >= chase_time:
 				set_state(State.TAME)
 		State.RECOIL:
@@ -79,7 +79,7 @@ func set_state(s):
 	match state:
 		State.TAME:
 			collision_layer = 4  # anger
-			sprite.frame = 2
+			sprite.frame = 0
 		State.WAKE:
 			collision_layer = 1  # move to foreground
-			sprite.frame = 0
+			sprite.frame = 1
