@@ -21,7 +21,7 @@ export(float) var step_time = 0.2
 onready var sprite = $Sprite
 onready var player = get_tree().get_root().find_node("Player", true, false)
 
-enum State { TAME, SHAKE, WAKE, CHASE, RECOIL, DIE }
+enum State { TAME, SHAKE, WAKE, CHASE, RECOIL, DIE, MAX_STATE }
 var state = State.TAME
 var time_in_state = 0
 
@@ -35,7 +35,9 @@ func _ready():
 
 func _process(delta):
 	time_in_state += delta
+	handle_state(state, delta)
 
+func handle_state(state, delta):
 	match state:
 		State.SHAKE:
 			step += delta
