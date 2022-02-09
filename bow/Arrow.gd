@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const break_velocity_factor = 0.3  # slow down arrow after breaking
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var linear_velocity = Vector2(0,0)
@@ -24,8 +26,10 @@ func _physics_process(delta):
 			global_transform = t
 
 			if collided_obj.has_method("_on_shot"):
-				collided_obj.call("_on_shot", collision.position,
-								  linear_velocity.normalized())
+				var dir = linear_velocity.normalized()
+				if collided_obj.call("_on_shot", collision.position, dir):
+					stuck = false  # fall through world
+					linear_velocity *= break_velocity_factor
 
 func update_angle():
 	rotation = linear_velocity.angle()
