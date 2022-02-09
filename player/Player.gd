@@ -132,6 +132,8 @@ func _on_attacked(direction):
 func damage(amt):
 	hurt_time = hurt_anim_time
 	health -= amt
+	if health < 0:
+		health = 0
 
 
 func dash_timer_timeout():
