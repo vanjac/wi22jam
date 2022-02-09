@@ -17,7 +17,12 @@ func _ready():
 
 func _process(delta):
 	var vec_to_mouse = get_global_mouse_position() - global_position
-	pivot.rotation = vec_to_mouse.angle()
+	if vec_to_mouse.x < 0:
+		pivot.scale = Vector2(-1, 1)
+		pivot.rotation = vec_to_mouse.angle() + PI
+	else:
+		pivot.scale = Vector2.ONE
+		pivot.rotation = vec_to_mouse.angle()
 
 	if Input.is_action_just_pressed("fire"):
 		draw_time = 0
@@ -25,6 +30,9 @@ func _process(delta):
 	if Input.is_action_pressed("fire"):
 		draw_time += delta / Engine.time_scale
 		charge_progress.value = clamp(draw_time / max_draw_time, 0, 1) * 100
+		pivot.visible = true
+	else:
+		pivot.visible = false
 
 	if Input.is_action_just_released("fire"):
 		charge_progress.visible = false
