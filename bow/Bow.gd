@@ -10,12 +10,17 @@ onready var pivot = $Pivot
 onready var charge_progress = $Charge
 
 var draw_time = 0
+var ignore_fire = true
 
 
 func _ready():
-	pass
+	ignore_fire = true
 
 func _process(delta):
+	if ignore_fire:
+		ignore_fire = false
+		return
+
 	var vec_to_mouse = get_global_mouse_position() - global_position
 	if vec_to_mouse.x < 0:
 		pivot.scale = Vector2(-1, 1)

@@ -14,3 +14,18 @@ margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Restart" type="Button" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 287.0
+margin_top = 163.0
+margin_right = -287.0
+margin_bottom = -163.0
+text = "Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Restart" to="." method="_on_Restart_pressed"]
