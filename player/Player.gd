@@ -118,6 +118,8 @@ func _physics_process(delta):
 	move_character(delta)
 
 func _on_attacked(direction):
+	if health == 0:
+		return
 	damage(1)
 	if health != 0:
 		move_vec = direction * knockback_speed
@@ -126,14 +128,14 @@ func _on_attacked(direction):
 		move_vec.y -= die_knockback_y
 		on_ground = false
 		die_direction = sign(direction.x)
-		$bow.queue_free()
 
 
 func damage(amt):
 	hurt_time = hurt_anim_time
 	health -= amt
-	if health < 0:
+	if health <= 0:
 		health = 0
+		$bow.queue_free()
 
 
 func dash_timer_timeout():
