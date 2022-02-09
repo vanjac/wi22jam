@@ -61,3 +61,5 @@ motion_mirroring = Vector2( 395, 282 )
 position = Vector2( 0.94775, -61 )
 texture = ExtResource( 9 )
 centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 1185, 846 )
